@@ -23,6 +23,7 @@ async function fetchCitySuggestions(city) {
 
   const data = await response.json();
   const suggestions = data.map((item) => item.name);
+  console.log(citySuggestionsList);
 
   lastSuggestions = [];
 
@@ -85,6 +86,12 @@ async function checkWeather(city) {
   }
 }
 
+searchBox.addEventListener("input", (e) => {
+  const selectedCity = e.target.value;
+  fetchCitySuggestions(selectedCity);
+});
+
+
 searchBox.addEventListener("input",updateValue);
 function updateValue(e) {
   if (e.target.value == "") {
@@ -106,14 +113,8 @@ searchBox.addEventListener("keydown", (e) => {
   }
 });
 
-function updateValue(e) {
-  if (e.target.value == "") {
-    document.querySelector(".weather").style.display = "none";
-  }
-}
 
-const suggestionList = document.getElementById("city-suggestions");
-suggestionList.addEventListener("change", (e) => {
+citySuggestionsList.addEventListener("change", (e) => {
   const selectedCity = e.target.value;
   checkWeather(selectedCity);
 });
